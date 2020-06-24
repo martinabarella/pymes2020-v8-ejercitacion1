@@ -1,0 +1,95 @@
+
+
+<div class="container" *ngIf="AccionABMC == 'L'">
+<h3>{{Titulo}}</h3>
+<div>
+    <button type="button" class="btn btn-primary" (click)="Agregar()">
+          <span class="fas fa-plus"> </span> 
+          Agregar
+      </button>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+            <th class="text-center"> Nombre </th>
+            <th class="text-center"> Ranking </th>
+            <th class="text-center"> Id </th>
+            <th class="text-center text-nowrap"> Acciones </th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of Items">
+            <td>{{item.EquipoNombre}}</td>
+            <td>{{item.EquipoRanking}}</td>
+            <td>{{item.IdEquipo}}</td>
+            <td class="text-center text-nowrap">
+
+					<button type="button" class="btn btn-sm btn-outline-primary" title="Modificar" (click)="Modificar(item)">
+                    <span class="fas fa-pencil-alt"></span>
+                </button>
+					<button type="button" class="btn btn-sm btn-outline-primary"
+                    title="Eliminar" (click)="Eliminar(item.IdEquipo)">
+                    <span class="fas fa-times"></span>
+                </button>
+				</td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+</div>
+<!----------------------------- -->
+
+<form name="FormReg" [formGroup]='FormReg' *ngIf="AccionABMC != 'L'" class="bg-light">
+		<!--campo EquipoNombre-->
+		<div class="form-group row">
+			<label class="col-form-label col-sm-2 col-sm-offset-2" for="EquipoNombre">Equipo Nombre <span
+                    class="text-danger">*</span></label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control" formControlName="EquipoNombre" 
+         [ngClass]="{'is-invalid': (FormReg.controls.EquipoNombre.touched || submitted)  
+            && FormReg.controls.EquipoNombre.errors}" />
+
+				<span class="text-danger" *ngIf="(FormReg.controls.EquipoNombre.touched || submitted ) 
+                        && FormReg.controls.EquipoNombre.errors?.required">
+                    Dato requerido.
+                </span>
+                <span class="text-danger" *ngIf="(FormReg.controls.EquipoNombre.touched || submitted ) 
+                       && (FormReg.controls.EquipoNombre.errors?.minlength || FormReg.controls.EquipoNombre.errors?.maxlength) ">
+                    Dato texto, 4 a 55 caracteres.
+                </span>
+                
+			</div>
+		</div>
+	<!--campo EquipoRanking-->
+		<div class="form-group row">
+			<label class="col-form-label col-sm-2 col-sm-offset-2" for="EquipoRanking">
+                Equipo Ranking <span class="text-danger">*</span>
+            </label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control" formControlName="EquipoRanking"
+        [ngClass]="{'is-invalid': (FormReg.controls.EquipoRanking.touched || submitted)  
+            && FormReg.controls.EquipoRanking.errors}" />
+				<span class="text-danger" *ngIf="(FormReg.controls.EquipoRanking.touched || submitted ) 
+                        && FormReg.controls.EquipoRanking.errors?.required">
+                    Dato requerido.
+                </span>
+				<span class="text-danger" *ngIf="(FormReg.controls.EquipoRanking.touched || submitted ) 
+                        && FormReg.controls.EquipoRanking.errors?.pattern">
+                    Dato numérico, 1 a 7 dígitos.
+                </span>
+			</div>
+		</div>
+
+
+	<!-- Botones Grabar, Cancelar/Volver' -->
+	<div class="row justify-content-center">
+		<button type="button" class="btn btn-primary" (click)="Grabar()">
+            <span class="fas fa-check"></span> Grabar
+        </button>
+		&nbsp;
+		<button type="button" class="btn btn-warning" (click)="Cancelar()">
+            <span class="fas fa-undo"></span> Cancelar
+        </button>
+	</div>
+
+</form>
